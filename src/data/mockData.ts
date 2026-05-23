@@ -1,0 +1,281 @@
+export interface Recipe {
+  id: string;
+  title: string;
+  image: string;
+  duration: string;
+  rating: number;
+  calories: number;
+  servings: number;
+  cuisine: string;
+  category: string;
+  isFeatured: boolean;
+  isSaved: boolean;
+  description: string;
+  ingredients: Ingredient[];
+  steps: Step[];
+  tags: string[];
+}
+
+export interface Ingredient {
+  id: string;
+  name: string;
+  amount: string;
+  unit: string;
+}
+
+export interface Step {
+  id: string;
+  step: number;
+  instruction: string;
+  duration?: string;
+}
+
+export interface CuisineCategory {
+  id: string;
+  label: string;
+  icon: string;
+}
+
+export interface OnboardingSlide {
+  id: string;
+  title: string;
+  subtitle: string;
+  icon: string;
+  image: string;
+}
+
+export const onboardingSlides: OnboardingSlide[] = [
+  {
+    id: '1',
+    title: 'Discover New\nRecipes',
+    subtitle: 'Explore thousands of delicious recipes from around the world',
+    icon: 'book-outline',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80',
+  },
+  {
+    id: '2',
+    title: 'Cook like\na Pro',
+    subtitle: 'Turn every meal into a masterpiece with guided steps',
+    icon: 'restaurant-outline',
+    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80',
+  },
+  {
+    id: '3',
+    title: 'Save Your\nFavorites',
+    subtitle: 'Create personalized collections and save recipes you love',
+    icon: 'heart-outline',
+    image: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=80',
+  },
+  {
+    id: '4',
+    title: 'Create Shopping\nList',
+    subtitle: 'Turn recipes into organized shopping lists in seconds',
+    icon: 'checkbox-outline',
+    image: 'https://images.unsplash.com/photo-1608501078713-8e445a709b39?w=600&q=80',
+  },
+];
+
+export const cuisineCategories: CuisineCategory[] = [
+  { id: 'all', label: 'All', icon: '🍽️' },
+  { id: 'italian', label: 'Italian', icon: '🍝' },
+  { id: 'mexican', label: 'Mexican', icon: '🌮' },
+  { id: 'middle-eastern', label: 'Middle Eastern', icon: '🧆' },
+  { id: 'asian', label: 'Asian', icon: '🍜' },
+  { id: 'american', label: 'American', icon: '🍔' },
+];
+
+export const recipes: Recipe[] = [
+  {
+    id: '1',
+    title: 'Grilled Steak',
+    image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&q=80',
+    duration: '45 Min',
+    rating: 4.5,
+    calories: 300,
+    servings: 2,
+    cuisine: 'american',
+    category: 'Main Course',
+    isFeatured: true,
+    isSaved: false,
+    description:
+      'Grilled Steak – A succulent, tender cut of beef, seared over an open flame for a smoky, charred crust while keeping the inside juicy and flavorful. Perfectly seasoned to bring out rich, savory notes, making every bite hearty and satisfying.',
+    tags: ['Keto', 'High-Protein', 'Gluten-Free'],
+    ingredients: [
+      { id: 'i1', name: 'Beef Steaks', amount: '250', unit: 'g' },
+      { id: 'i2', name: 'Garlic Cloves', amount: '2', unit: '' },
+      { id: 'i3', name: 'Salt', amount: '5', unit: 'g' },
+      { id: 'i4', name: 'Black Pepper', amount: '3', unit: 'g' },
+      { id: 'i5', name: 'Rosemary', amount: '5', unit: 'g' },
+      { id: 'i6', name: 'Butter', amount: '5', unit: 'g' },
+      { id: 'i7', name: 'Olive Oil', amount: '30', unit: 'ml' },
+    ],
+    steps: [
+      { id: 's1', step: 1, instruction: 'Take the steak out of the fridge 30 minutes before cooking to bring it to room temperature.', duration: '30 min' },
+      { id: 's2', step: 2, instruction: 'Season generously with salt and black pepper on both sides. Add crushed garlic and rosemary.', duration: '5 min' },
+      { id: 's3', step: 3, instruction: 'Heat a cast iron skillet over high heat until smoking. Add olive oil.', duration: '3 min' },
+      { id: 's4', step: 4, instruction: 'Sear the steak 3–4 minutes per side for medium-rare. Add butter in the last minute and baste continuously.', duration: '8 min' },
+      { id: 's5', step: 5, instruction: 'Rest the steak for 5 minutes before slicing against the grain.', duration: '5 min' },
+    ],
+  },
+  {
+    id: '2',
+    title: 'Vegetable Omelette',
+    image: 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=600&q=80',
+    duration: '10 Min',
+    rating: 3.5,
+    calories: 180,
+    servings: 1,
+    cuisine: 'italian',
+    category: 'Breakfast',
+    isFeatured: true,
+    isSaved: true,
+    description: 'A fluffy, golden omelette loaded with colorful vegetables, herbs, and a touch of cheese. Light yet satisfying, perfect for a quick nutritious meal any time of day.',
+    tags: ['Vegetarian', 'Quick', 'Healthy'],
+    ingredients: [
+      { id: 'i1', name: 'Eggs', amount: '3', unit: '' },
+      { id: 'i2', name: 'Bell Pepper', amount: '50', unit: 'g' },
+      { id: 'i3', name: 'Onion', amount: '30', unit: 'g' },
+      { id: 'i4', name: 'Feta Cheese', amount: '20', unit: 'g' },
+      { id: 'i5', name: 'Olive Oil', amount: '15', unit: 'ml' },
+      { id: 'i6', name: 'Salt & Pepper', amount: '', unit: 'to taste' },
+    ],
+    steps: [
+      { id: 's1', step: 1, instruction: 'Whisk eggs with a pinch of salt and pepper until light and frothy.', duration: '2 min' },
+      { id: 's2', step: 2, instruction: 'Sauté diced onion and bell pepper in olive oil until softened.', duration: '3 min' },
+      { id: 's3', step: 3, instruction: 'Pour egg mixture over vegetables. Cook until edges set.', duration: '2 min' },
+      { id: 's4', step: 4, instruction: 'Add feta cheese, fold omelette, cook 1 more minute and serve.', duration: '1 min' },
+    ],
+  },
+  {
+    id: '3',
+    title: 'Berry Cake',
+    image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80',
+    duration: '35 Min',
+    rating: 5,
+    calories: 420,
+    servings: 8,
+    cuisine: 'italian',
+    category: 'Desserts',
+    isFeatured: false,
+    isSaved: true,
+    description: 'A moist, decadent berry cake topped with fresh seasonal berries and whipped cream. A showstopper dessert for any occasion.',
+    tags: ['Dessert', 'Baking', 'Vegetarian'],
+    ingredients: [
+      { id: 'i1', name: 'All-purpose Flour', amount: '200', unit: 'g' },
+      { id: 'i2', name: 'Mixed Berries', amount: '150', unit: 'g' },
+      { id: 'i3', name: 'Butter', amount: '100', unit: 'g' },
+      { id: 'i4', name: 'Sugar', amount: '150', unit: 'g' },
+      { id: 'i5', name: 'Eggs', amount: '2', unit: '' },
+      { id: 'i6', name: 'Heavy Cream', amount: '100', unit: 'ml' },
+    ],
+    steps: [
+      { id: 's1', step: 1, instruction: 'Preheat the oven to 180°C and grease a round cake pan.', duration: '10 min' },
+      { id: 's2', step: 2, instruction: 'Cream butter and sugar together until pale and fluffy.', duration: '4 min' },
+      { id: 's3', step: 3, instruction: 'Beat in the eggs one at a time, then fold in the flour and cream.', duration: '6 min' },
+      { id: 's4', step: 4, instruction: 'Fold in the berries gently and pour the batter into the pan.', duration: '3 min' },
+      { id: 's5', step: 5, instruction: 'Bake for 25 to 30 minutes until golden and a skewer comes out clean.', duration: '30 min' },
+    ],
+  },
+  {
+    id: '4',
+    title: 'Pasta Carbonara',
+    image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600&q=80',
+    duration: '20 Min',
+    rating: 4.5,
+    calories: 520,
+    servings: 2,
+    cuisine: 'italian',
+    category: 'Main Course',
+    isFeatured: false,
+    isSaved: false,
+    description: 'Classic Roman pasta carbonara with silky egg sauce, crispy guanciale, Pecorino Romano, and freshly cracked black pepper. Simple perfection.',
+    tags: ['Italian', 'Quick', 'Comfort Food'],
+    ingredients: [
+      { id: 'i1', name: 'Spaghetti', amount: '200', unit: 'g' },
+      { id: 'i2', name: 'Guanciale', amount: '100', unit: 'g' },
+      { id: 'i3', name: 'Egg Yolks', amount: '4', unit: '' },
+      { id: 'i4', name: 'Pecorino Romano', amount: '50', unit: 'g' },
+      { id: 'i5', name: 'Black Pepper', amount: '', unit: 'to taste' },
+    ],
+    steps: [
+      { id: 's1', step: 1, instruction: 'Cook the spaghetti in salted water until al dente.', duration: '10 min' },
+      { id: 's2', step: 2, instruction: 'Crisp the guanciale in a pan over medium heat, then turn off the heat.', duration: '6 min' },
+      { id: 's3', step: 3, instruction: 'Whisk egg yolks with Pecorino Romano and plenty of black pepper.', duration: '3 min' },
+      { id: 's4', step: 4, instruction: 'Toss pasta with guanciale, then quickly mix in the egg sauce off the heat.', duration: '2 min' },
+      { id: 's5', step: 5, instruction: 'Serve immediately with extra cheese and black pepper on top.', duration: '1 min' },
+    ],
+  },
+  {
+    id: '5',
+    title: 'Chicken Shawarma',
+    image: 'https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=600&q=80',
+    duration: '40 Min',
+    rating: 4.8,
+    calories: 380,
+    servings: 4,
+    cuisine: 'middle-eastern',
+    category: 'Main Course',
+    isFeatured: true,
+    isSaved: false,
+    description: 'Juicy, spiced chicken strips wrapped in warm pita with garlic sauce, pickles, and fresh vegetables. The ultimate Middle Eastern street food experience.',
+    tags: ['Middle Eastern', 'Gluten-Free', 'High-Protein'],
+    ingredients: [
+      { id: 'i1', name: 'Chicken Thighs', amount: '600', unit: 'g' },
+      { id: 'i2', name: 'Yogurt', amount: '120', unit: 'g' },
+      { id: 'i3', name: 'Garlic Cloves', amount: '4', unit: '' },
+      { id: 'i4', name: 'Paprika', amount: '2', unit: 'tsp' },
+      { id: 'i5', name: 'Cumin', amount: '1', unit: 'tsp' },
+      { id: 'i6', name: 'Olive Oil', amount: '2', unit: 'tbsp' },
+      { id: 'i7', name: 'Pita Bread', amount: '4', unit: 'pcs' },
+    ],
+    steps: [
+      { id: 's1', step: 1, instruction: 'Mix yogurt, garlic, paprika, cumin, salt, and olive oil to make the marinade.', duration: '5 min' },
+      { id: 's2', step: 2, instruction: 'Coat the chicken and marinate for at least 30 minutes.', duration: '30 min' },
+      { id: 's3', step: 3, instruction: 'Cook the chicken in a hot pan or on a grill until charred and cooked through.', duration: '15 min' },
+      { id: 's4', step: 4, instruction: 'Slice the chicken and serve in pita with sauce and vegetables.', duration: '5 min' },
+    ],
+  },
+  {
+    id: '6',
+    title: 'Avocado Toast',
+    image: 'https://images.unsplash.com/photo-1603046891744-1f2c89c40000?w=600&q=80',
+    duration: '10 Min',
+    rating: 4.2,
+    calories: 280,
+    servings: 1,
+    cuisine: 'american',
+    category: 'Breakfast',
+    isFeatured: false,
+    isSaved: true,
+    description: 'Perfectly smashed avocado on sourdough toast with a sprinkle of everything bagel seasoning, poached egg, and microgreens.',
+    tags: ['Vegan', 'Healthy', 'Quick'],
+    ingredients: [
+      { id: 'i1', name: 'Sourdough Bread', amount: '2', unit: 'slices' },
+      { id: 'i2', name: 'Avocado', amount: '1', unit: '' },
+      { id: 'i3', name: 'Lemon Juice', amount: '1', unit: 'tsp' },
+      { id: 'i4', name: 'Salt', amount: '', unit: 'to taste' },
+      { id: 'i5', name: 'Black Pepper', amount: '', unit: 'to taste' },
+      { id: 'i6', name: 'Microgreens', amount: '1', unit: 'handful' },
+    ],
+    steps: [
+      { id: 's1', step: 1, instruction: 'Toast the sourdough slices until golden and crisp.', duration: '3 min' },
+      { id: 's2', step: 2, instruction: 'Mash avocado with lemon juice, salt, and black pepper.', duration: '2 min' },
+      { id: 's3', step: 3, instruction: 'Spread the avocado over the toast and top with microgreens.', duration: '2 min' },
+    ],
+  },
+];
+
+export const aiRecommendations = [
+  {
+    id: 'ai1',
+    label: 'Based on your mood',
+    recipe: recipes[0],
+  },
+  {
+    id: 'ai2',
+    label: 'Under 30 minutes',
+    recipe: recipes[3],
+  },
+];
+
+export const popularTags = ['Cake', 'Spicy', 'Italian', 'Keto', 'Lunch', 'Steak', 'Koshary', 'Grilling'];
