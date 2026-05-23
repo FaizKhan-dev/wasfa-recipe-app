@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🍽️ Wasfa — AI-Powered Recipe App
+# 🍽️ Recipify — AI-Powered Recipe App
 
 **A premium, dark-themed mobile recipe application built with Expo & React Native**
 
@@ -36,7 +36,7 @@
 
 ## 🌟 Overview
 
-**Wasfa** (وصفة — Arabic for "recipe") is a full-featured, production-ready mobile app for discovering, saving, and cooking recipes. Built with a premium dark UI inspired by high-end iOS apps like Linear and Cal.ai, it features smooth animations, a well-structured navigation system, and a clean component architecture.
+**Recipify**  is a full-featured, production-ready mobile app for discovering, saving, and cooking recipes. Built with a premium dark UI inspired by high-end iOS apps like Linear and Cal.ai, it features smooth animations, a well-structured navigation system, and a clean component architecture.
 
 The app is designed to be extended with a real backend API. All data currently runs on structured mock data that mirrors what a real API would return.
 
@@ -95,7 +95,7 @@ The app is designed to be extended with a real backend API. All data currently r
 ## 📁 Project Structure
 
 ```
-wasfa-recipe-app/
+Recipify-recipe-app/
 │
 ├── App.tsx                          # Entry point — manages onboarding → main app
 ├── app.json                         # Expo config (name, icons, splash, platforms)
@@ -184,12 +184,12 @@ Make sure you have the following installed:
 **1. Clone or extract the project:**
 ```bash
 # If using git
-git clone https://github.com/yourusername/wasfa-recipe-app.git
-cd wasfa-recipe-app
+git clone https://github.com/yourusername/Recipify-recipe-app.git
+cd Recipify-recipe-app
 
 # Or extract the zip
-tar -xzf wasfa-recipe-src.tar.gz
-cd wasfa-recipe-app
+tar -xzf Recipify-recipe-src.tar.gz
+cd Recipify-recipe-app
 ```
 
 **2. Install dependencies:**
