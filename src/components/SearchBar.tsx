@@ -68,8 +68,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 };
 
 type Palette = {
-  card: string;
-  cardBorder: string;
+  surface: string;
+  border: string;
   textMuted: string;
   textPrimary: string;
   primary: string;
@@ -87,10 +87,10 @@ const createStyles = (palette: Palette) =>
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: palette.card,
+      backgroundColor: palette.surface,
       borderRadius: radius.full,
       borderWidth: 1,
-      borderColor: palette.cardBorder,
+      borderColor: palette.border,
       paddingHorizontal: spacing.md,
       height: 48,
     },

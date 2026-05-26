@@ -14,28 +14,36 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { spacing } from '../theme';
-import { cuisineCategories, recipes, aiRecommendations } from '../data/mockData';
+import { cuisineCategories, type Recipe } from '../data/mockData';
 import { RecipeCard } from '../components/RecipeCard';
 import { SearchBar } from '../components/SearchBar';
 import { SectionHeader } from '../components/SectionHeader';
 import { RootStackParamList } from '../types/navigation';
 import { useDrawerControls } from '../navigation/DrawerContext';
 import { useAppSettings } from '../context/AppSettingsContext';
+import { useRecipes } from '../context';
 
 type HomeNavProp = NativeStackNavigationProp<RootStackParamList>;
+
+type Recommendation = {
+  id: string;
+  label: string;
+  recipe: Recipe;
+};
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<HomeNavProp>();
   const { openDrawer } = useDrawerControls();
   const insets = useSafeAreaInsets();
   const { palette } = useAppSettings();
+  const { recipes } = useRecipes();
   const styles = useMemo(() => createStyles(palette), [palette]);
   const [activeCuisine, setActiveCuisine] = useState('all');
   const [query, setQuery] = useState('');
 
   const featuredRecipes = useMemo(
     () => recipes.filter((recipe) => recipe.isFeatured),
-    [],
+    [recipes],
   );
 
   const filteredRecipes = useMemo(() => {
@@ -47,7 +55,33 @@ const HomeScreen: React.FC = () => {
 
       return matchesCuisine && matchesQuery;
     });
-  }, [activeCuisine, query]);
+  }, [activeCuisine, query, recipes]);
+
+  const aiRecommendations = useMemo<Recommendation[]>(() => {
+    if (recipes.length === 0) {
+      return [];
+    }
+
+    const fallbackRecipe = recipes[0]!;
+    const quickestRecipe = [...recipes].sort((left, right) => {
+      const leftMinutes = Number.parseInt(left.duration, 10) || 0;
+      const rightMinutes = Number.parseInt(right.duration, 10) || 0;
+      return leftMinutes - rightMinutes;
+    })[0] ?? fallbackRecipe;
+
+    return [
+      {
+        id: 'ai1',
+        label: 'Based on your mood',
+        recipe: featuredRecipes[0] ?? fallbackRecipe,
+      },
+      {
+        id: 'ai2',
+        label: 'Under 30 minutes',
+        recipe: quickestRecipe,
+      },
+    ];
+  }, [recipes, featuredRecipes]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>

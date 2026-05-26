@@ -38,7 +38,7 @@
 
 **Recipify**  is a full-featured, production-ready mobile app for discovering, saving, and cooking recipes. Built with a premium dark UI inspired by high-end iOS apps like Linear and Cal.ai, it features smooth animations, a well-structured navigation system, and a clean component architecture.
 
-The app is designed to be extended with a real backend API. All data currently runs on structured mock data that mirrors what a real API would return.
+The app now demonstrates CRUD against a fake REST API powered by JSON Server. The UI still uses the existing theme and navigation system, but recipe data is loaded from and persisted to the local API during development.
 
 ---
 
@@ -102,6 +102,7 @@ Recipify-recipe-app/
 ├── babel.config.js                  # Babel config (babel-preset-expo only)
 ├── tsconfig.json                    # TypeScript configuration
 ├── package.json                     # Dependencies
+├── db.json                           # JSON Server seed database
 │
 └── src/
     │
@@ -116,7 +117,11 @@ Recipify-recipe-app/
     │   ├── RecipeDetailScreen.tsx   # Full recipe view with scroll-aware header
     │   ├── SavedScreen.tsx          # Bookmarked recipes
     │   ├── ShoppingListScreen.tsx   # Interactive shopping checklist
+    │   ├── ManageRecipesScreen.tsx  # JSON Server CRUD demo screen
     │   └── ProfileScreen.tsx        # Settings & user profile
+    │
+    ├── services/
+    │   └── api.ts                   # Fetch-based API client for JSON Server
     │
     ├── components/
     │   ├── RecipeCard.tsx           # Multi-variant card (grid / list / featured)
@@ -157,6 +162,9 @@ App.tsx
             │
             ├── RecipeDetail   → RecipeDetailScreen
             │   (slide_from_right)
+            │
+            ├── ManageRecipes   → ManageRecipesScreen
+            │   (CRUD screen backed by JSON Server)
             │
             └── Search         → SearchScreen
                 (modal, slide_from_bottom)
@@ -221,6 +229,22 @@ mkdir -p assets
 ---
 
 ## ▶️ Running the App
+
+Start the fake API first so the recipe screens can load from JSON Server:
+
+```bash
+npm run server
+```
+
+If you are testing on a physical device with Expo Go, `localhost` will not work.
+
+Use your computer's LAN IP instead:
+
+```bash
+EXPO_PUBLIC_API_BASE_URL=http://<your-computer-ip>:3000 npm start
+```
+
+Keep `npm run server` running in a separate terminal. If the phone still cannot reach the API, verify that the IP shown in the app matches your computer's current LAN address and that port `3000` is open on the same Wi-Fi network.
 
 ### On Physical Device (Expo Go)
 

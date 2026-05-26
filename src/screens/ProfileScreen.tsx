@@ -14,9 +14,14 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { spacing, radius, typography } from '../theme';
 import { useAppSettings, useProfile } from '../context';
+import { RootStackParamList } from '../types/navigation';
+
+type ProfileNavProp = NativeStackNavigationProp<RootStackParamList>;
 
 const ProfileScreen: React.FC = () => {
   const [notifications, setNotifications] = useState(true);
@@ -26,6 +31,7 @@ const ProfileScreen: React.FC = () => {
 
   const { palette, t, themeMode, setThemeMode } = useAppSettings();
   const { name, email, avatarUrl, setName, setEmail, setAvatarUrl } = useProfile();
+  const navigation = useNavigation<ProfileNavProp>();
   const darkMode = themeMode === 'dark';
   const styles = useMemo(() => createStyles(palette), [palette]);
 
@@ -132,6 +138,27 @@ const ProfileScreen: React.FC = () => {
         <View style={styles.divider} />
 
         <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.manageRecipesRow}
+            activeOpacity={0.85}
+            onPress={() => navigation.navigate('ManageRecipes')}
+          >
+            <View style={styles.settingLeft}>
+              <View style={styles.settingIconWrap}>
+                <Ionicons name="create-outline" size={18} color={palette.textSecondary} />
+              </View>
+              <View>
+                <Text style={styles.settingLabel}>Manage Recipes</Text>
+                <Text style={styles.settingValue}>Open the API CRUD demo screen</Text>
+              </View>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color={palette.textMuted} />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.divider} />
+
+        <View style={styles.card}>
           <View style={styles.settingRow}>
             <View style={styles.settingLeft}>
               <View style={styles.settingIconWrap}>
@@ -207,6 +234,19 @@ const ProfileScreen: React.FC = () => {
   );
 };
 
+type Palette = {
+  background: string;
+  surface: string;
+  elevated: string;
+  border: string;
+  textPrimary: string;
+  textSecondary: string;
+  textMuted: string;
+  primary: string;
+  primaryMuted: string;
+  error: string;
+};
+
 const createStyles = (palette: Palette) =>
   StyleSheet.create({
     safe: { flex: 1, backgroundColor: palette.background },
@@ -275,6 +315,13 @@ const createStyles = (palette: Palette) =>
     },
     settingLabel: { ...typography.bodyMedium, color: palette.textPrimary, fontWeight: '600' },
     settingValue: { ...typography.bodySmall, color: palette.textSecondary, marginTop: 2 },
+    manageRecipesRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.md,
+    },
     unitOptions: {
       paddingHorizontal: spacing.md,
       paddingBottom: spacing.md,

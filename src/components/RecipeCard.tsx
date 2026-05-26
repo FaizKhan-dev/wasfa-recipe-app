@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Pressable,
   Image,
   Dimensions,
 } from 'react-native';
@@ -61,6 +62,7 @@ const createStyles = (palette: Palette) =>
       backgroundColor: 'rgba(0,0,0,0.4)',
       borderRadius: radius.full,
       padding: 6,
+      zIndex: 2,
     },
     gridContent: {
       padding: spacing.sm + 2,
@@ -105,6 +107,7 @@ const createStyles = (palette: Palette) =>
     },
     listBookmark: {
       padding: 6,
+      zIndex: 2,
     },
     tagRow: {
       flexDirection: 'row',
@@ -143,6 +146,7 @@ const createStyles = (palette: Palette) =>
       backgroundColor: 'rgba(0,0,0,0.45)',
       borderRadius: radius.full,
       padding: 7,
+      zIndex: 2,
     },
     featuredBottom: {
       position: 'absolute',
@@ -187,9 +191,9 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
   const styles = useMemo(() => createStyles(palette), [palette]);
   const saved = isRecipeSaved(recipe.id);
 
-  const handleSave = (e: any) => {
-    e.stopPropagation();
-    toggleRecipeSaved(recipe.id);
+  const handleSave = (event?: { stopPropagation?: () => void }) => {
+    event?.stopPropagation?.();
+    void toggleRecipeSaved(recipe.id);
   };
 
   if (variant === 'featured') {
@@ -197,9 +201,9 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
       <TouchableOpacity style={[styles.featuredCard, style]} onPress={onPress} activeOpacity={0.92}>
         <Image source={{ uri: recipe.image }} style={styles.featuredImage} />
         <View style={styles.featuredOverlay} />
-        <TouchableOpacity style={styles.bookmarkBtn} onPress={handleSave} activeOpacity={0.8}>
+        <Pressable style={styles.bookmarkBtn} onPress={handleSave} hitSlop={8}>
           <Ionicons name={saved ? 'bookmark' : 'bookmark-outline'} size={18} color={saved ? palette.primary : palette.textPrimary} />
-        </TouchableOpacity>
+        </Pressable>
         <View style={styles.featuredBottom}>
           <Text style={styles.featuredTitle} numberOfLines={1}>{recipe.title}</Text>
           <View style={styles.featuredMeta}>
@@ -245,9 +249,9 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
             </View>
           )}
         </View>
-        <TouchableOpacity style={styles.listBookmark} onPress={handleSave} activeOpacity={0.8}>
+        <Pressable style={styles.listBookmark} onPress={handleSave} hitSlop={8}>
           <Ionicons name={saved ? 'bookmark' : 'bookmark-outline'} size={18} color={saved ? palette.primary : palette.textMuted} />
-        </TouchableOpacity>
+        </Pressable>
       </TouchableOpacity>
     );
   }
@@ -257,9 +261,9 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
       <View style={styles.gridImageWrapper}>
         <Image source={{ uri: recipe.image }} style={styles.gridImage} />
         <View style={styles.gridOverlay} />
-        <TouchableOpacity style={styles.gridBookmark} onPress={handleSave} activeOpacity={0.8}>
+        <Pressable style={styles.gridBookmark} onPress={handleSave} hitSlop={8}>
           <Ionicons name={saved ? 'bookmark' : 'bookmark-outline'} size={16} color={saved ? palette.primary : palette.textPrimary} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View style={styles.gridContent}>
         <Text style={styles.gridTitle} numberOfLines={1}>{recipe.title}</Text>

@@ -13,10 +13,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0D0D0D"
-      }
+      },
+      "package": "com.faizkhanw.wasfarecipeapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "199424f3-506b-46a8-ba47-c322204bd59e"
+      }
     }
   }
 }

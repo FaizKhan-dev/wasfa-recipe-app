@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import AppNavigator from './src/navigation';
-import { AppSettingsProvider, ProfileProvider, SavedRecipesProvider, ShoppingListProvider } from './src/context';
+import { AppSettingsProvider, ProfileProvider, RecipesProvider, SavedRecipesProvider, ShoppingListProvider } from './src/context';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,11 +34,13 @@ export default function App() {
         <StatusBar style="light" backgroundColor="#0D0D0D" />
         <AppSettingsProvider>
           <ProfileProvider>
-            <SavedRecipesProvider>
-              <ShoppingListProvider>
-                <AppNavigator />
-              </ShoppingListProvider>
-            </SavedRecipesProvider>
+            <RecipesProvider>
+              <SavedRecipesProvider>
+                <ShoppingListProvider>
+                  <AppNavigator />
+                </ShoppingListProvider>
+              </SavedRecipesProvider>
+            </RecipesProvider>
           </ProfileProvider>
         </AppSettingsProvider>
       </SafeAreaProvider>

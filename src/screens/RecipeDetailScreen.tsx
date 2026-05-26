@@ -13,11 +13,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { colors, spacing, radius, typography } from '../theme';
-import { recipes } from '../data/mockData';
+import { useRecipes } from '../context';
 import { RootStackParamList } from '../types/navigation';
-import { useShoppingList } from '../context/SavedRecipesContext';
+import { useSavedRecipes, useShoppingList } from '../context/SavedRecipesContext';
 
 type RecipeDetailRouteProp = RouteProp<RootStackParamList, 'RecipeDetail'>;
 
@@ -32,17 +33,30 @@ const STAR_REVIEWS = [
 ];
 
 const RecipeDetailScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const route = useRoute<RecipeDetailRouteProp>();
   const { recipeId } = route.params;
 
-  const recipe = recipes.find((r) => r.id === recipeId) ?? recipes[0];
+  const { recipes } = useRecipes();
+  const { isRecipeSaved, toggleRecipeSaved } = useSavedRecipes();
   const { addIngredientsFromRecipe } = useShoppingList();
 
+  const recipe = recipes.find((r) => r.id === recipeId) ?? recipes[0];
   const [activeTab, setActiveTab] = useState<Tab>('Ingredients');
-  const [saved, setSaved] = useState(recipe.isSaved);
-  const [servings, setServings] = useState(recipe.servings);
+  const [servings, setServings] = useState(recipe?.servings ?? 1);
   const scrollY = useRef(new Animated.Value(0)).current;
+
+  if (!recipe) {
+    return (
+      <View style={styles.container}>
+        <SafeAreaView edges={['top']}>
+          <Text style={[styles.title, { padding: spacing.md }]}>Recipe not found.</Text>
+        </SafeAreaView>
+      </View>
+    );
+  }
+
+  const saved = isRecipeSaved(recipe.id);
 
   const headerOpacity = scrollY.interpolate({
     inputRange: [IMAGE_HEIGHT - 100, IMAGE_HEIGHT - 40],
@@ -60,7 +74,7 @@ const RecipeDetailScreen: React.FC = () => {
               <Ionicons name="arrow-back" size={20} color={colors.textPrimary} />
             </TouchableOpacity>
             <Text style={styles.floatingTitle} numberOfLines={1}>{recipe.title}</Text>
-            <TouchableOpacity style={styles.headerBtn} onPress={() => setSaved(!saved)} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.headerBtn} onPress={() => void toggleRecipeSaved(recipe.id)} activeOpacity={0.8}>
               <Ionicons name={saved ? 'bookmark' : 'bookmark-outline'} size={20} color={saved ? colors.primary : colors.textPrimary} />
             </TouchableOpacity>
           </View>
@@ -86,7 +100,7 @@ const RecipeDetailScreen: React.FC = () => {
             <TouchableOpacity style={styles.heroBtn} onPress={() => navigation.goBack()} activeOpacity={0.8}>
               <Ionicons name="arrow-back" size={20} color={colors.textPrimary} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.heroBtn} onPress={() => setSaved(!saved)} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.heroBtn} onPress={() => void toggleRecipeSaved(recipe.id)} activeOpacity={0.8}>
               <Ionicons name={saved ? 'bookmark' : 'bookmark-outline'} size={22} color={saved ? colors.primary : colors.textPrimary} />
             </TouchableOpacity>
           </SafeAreaView>
@@ -216,7 +230,7 @@ const RecipeDetailScreen: React.FC = () => {
           activeOpacity={0.88}
           onPress={() => {
             addIngredientsFromRecipe(recipe);
-            navigation.navigate('MainTabs', { screen: 'List' } as never);
+            navigation.navigate('MainTabs', { screen: 'List' });
           }}
         >
           <Ionicons name="cart-outline" size={20} color={colors.textInverse} />

@@ -1,36 +1,34 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
-import { Recipe, recipes } from '../data/mockData';
+import { Recipe } from '../data/mockData';
+import { useRecipes } from './RecipesContext';
 
 type SavedRecipesContextValue = {
   savedRecipeIds: Set<string>;
   isRecipeSaved: (recipeId: string) => boolean;
-  toggleRecipeSaved: (recipeId: string) => void;
+  toggleRecipeSaved: (recipeId: string) => Promise<void>;
 };
 
 const SavedRecipesContext = createContext<SavedRecipesContextValue | null>(null);
 
 export const SavedRecipesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const initialSavedIds = useMemo(
+  const { recipes, updateRecipe } = useRecipes();
+
+  const savedRecipeIds = useMemo(
     () => new Set(recipes.filter((recipe) => recipe.isSaved).map((recipe) => recipe.id)),
-    [],
+    [recipes],
   );
-  const [savedRecipeIds, setSavedRecipeIds] = useState<Set<string>>(initialSavedIds);
 
   const isRecipeSaved = (recipeId: string) => savedRecipeIds.has(recipeId);
 
-  const toggleRecipeSaved = (recipeId: string) => {
-    setSavedRecipeIds((current) => {
-      const next = new Set(current);
+  const toggleRecipeSaved = async (recipeId: string) => {
+    const recipe = recipes.find((item) => item.id === recipeId);
 
-      if (next.has(recipeId)) {
-        next.delete(recipeId);
-      } else {
-        next.add(recipeId);
-      }
+    if (!recipe) {
+      return;
+    }
 
-      return next;
-    });
+    await updateRecipe(recipeId, { isSaved: !recipe.isSaved });
   };
 
   return (

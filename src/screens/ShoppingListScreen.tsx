@@ -192,6 +192,7 @@ const ShoppingListScreen: React.FC = () => {
 type Palette = {
   background: string;
   surface: string;
+  elevated: string;
   border: string;
   textPrimary: string;
   textSecondary: string;

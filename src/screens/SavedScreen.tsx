@@ -12,11 +12,11 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { spacing, radius, typography } from '../theme';
-import { recipes } from '../data/mockData';
 import { RecipeCard } from '../components/RecipeCard';
 import { RootStackParamList } from '../types/navigation';
 import { useSavedRecipes } from '../context/SavedRecipesContext';
 import { useAppSettings } from '../context/AppSettingsContext';
+import { useRecipes } from '../context';
 
 type SavedNavProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -26,6 +26,7 @@ const SavedScreen: React.FC = () => {
   const navigation = useNavigation<SavedNavProp>();
   const [activeFilter, setActiveFilter] = useState('All');
   const { savedRecipeIds } = useSavedRecipes();
+  const { recipes } = useRecipes();
   const { palette, t } = useAppSettings();
   const styles = React.useMemo(() => createStyles(palette), [palette]);
 

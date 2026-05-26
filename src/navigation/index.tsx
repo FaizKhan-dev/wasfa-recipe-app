@@ -26,6 +26,7 @@ import SearchScreen from '../screens/SearchScreen';
 import RecipeDetailScreen from '../screens/RecipeDetailScreen';
 import SavedScreen from '../screens/SavedScreen';
 import ShoppingListScreen from '../screens/ShoppingListScreen';
+import ManageRecipesScreen from '../screens/ManageRecipesScreen';
 import { DrawerProvider } from './DrawerContext';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -79,6 +80,8 @@ const TabNavigator = () => {
 const RootStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="MainTabs"     component={TabNavigator} />
+    <Stack.Screen name="ManageRecipes" component={ManageRecipesScreen}
+      options={{ animation: 'slide_from_right' }} />
     <Stack.Screen name="RecipeDetail" component={RecipeDetailScreen}
       options={{ animation: 'slide_from_right' }} />
     <Stack.Screen name="Search"       component={SearchScreen}
@@ -90,7 +93,7 @@ const RootStack = () => (
 type DrawerItem = {
   icon: keyof typeof Ionicons.glyphMap;
   screen: string;
-  labelKey: 'home' | 'saved' | 'list' | 'profile';
+  labelKey: 'home' | 'saved' | 'list' | 'profile' | 'manageRecipes';
 };
 
 const DRAWER_ITEMS: DrawerItem[] = [
@@ -98,6 +101,7 @@ const DRAWER_ITEMS: DrawerItem[] = [
   { icon: 'bookmark-outline', labelKey: 'saved',   screen: 'Saved' },
   { icon: 'list-outline',     labelKey: 'list',    screen: 'List' },
   { icon: 'person-outline',   labelKey: 'profile', screen: 'Profile' },
+  { icon: 'create-outline',   labelKey: 'manageRecipes', screen: 'ManageRecipes' },
 ];
 
 const DrawerContent = ({
@@ -213,7 +217,9 @@ const AppNavigator = () => {
   const handleNavigate = useCallback((screen: string) => {
     setActiveScreen(screen);
     if (navigationRef.current) {
-      if (screen === 'MainTabs' || screen === 'Home') {
+      if (screen === 'ManageRecipes') {
+        navigationRef.current.navigate('ManageRecipes');
+      } else if (screen === 'MainTabs' || screen === 'Home') {
         navigationRef.current.navigate('MainTabs');
       } else {
         navigationRef.current.navigate('MainTabs', { screen });
@@ -234,7 +240,7 @@ const AppNavigator = () => {
           </TouchableWithoutFeedback>
         )}
 
-        <Animated.View
+        <Animated.View---
           style={[
             styles.drawer,
             { transform: [{ translateX }] },

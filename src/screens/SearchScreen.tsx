@@ -17,10 +17,11 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { colors, spacing, radius, typography } from '../theme';
-import { recipes, popularTags } from '../data/mockData';
+import { popularTags } from '../data/mockData';
 import { RecipeCard } from '../components/RecipeCard';
 import { SearchBar } from '../components/SearchBar';
 import { RootStackParamList } from '../types/navigation';
+import { useRecipes } from '../context';
 
 type SearchNavProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -76,6 +77,7 @@ const HOME_MATCHES: Record<string, string[]> = {
 
 const SearchScreen = () => {
   const navigation = useNavigation<SearchNavProp>();
+  const { recipes } = useRecipes();
   const [query, setQuery] = useState('');
   const [activeAtHome, setActiveAtHome] = useState<string[]>([]);
   const [selectedMethods, setSelectedMethods] = useState<string[]>([]);
